@@ -1,17 +1,29 @@
 package com.inkafarma.personsapi.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonSearchResponse {
 
+    @ApiModelProperty(notes = "Nombre de la Persona",dataType = "String",example = "Carlos")
     private String nombre;
+
+    @ApiModelProperty(notes = "Apellido de la Persona",dataType = "String",example = "Calla")
     private String apellido;
+
+    @ApiModelProperty(notes = "Edad de la Persona",dataType = "String",example = "28")
     private int edad;
+
+    @ApiModelProperty(notes = "Fecha de Nacimiento de la Persona",dataType = "String",example = "21/05/1989")
     private String fechaNacimiento;
+
+
     private int edadPromedio;
+
+    @ApiModelProperty(notes = "Fecha probable de muerte la persona",dataType = "String",example = "14/03/2030")
     private String fechaProbableMuerte;
 
     private PersonSearchResponse(String nombre, String apellido, int edad, String fechaNacimiento,

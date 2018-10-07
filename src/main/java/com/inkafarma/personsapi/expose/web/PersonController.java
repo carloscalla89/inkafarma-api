@@ -4,6 +4,7 @@ import com.inkafarma.personsapi.model.PersonRegisterRequest;
 import com.inkafarma.personsapi.model.PersonSearchResponse;
 import com.inkafarma.personsapi.model.ResponseError;
 import com.inkafarma.personsapi.service.PersonService;
+import com.inkafarma.personsapi.util.exception.CustomValidationException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -12,8 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -48,13 +51,19 @@ public class PersonController {
             @ApiResponse(code = 500, message = "Error en el servicio", response = ResponseError.class)
     })
     @PostMapping(value="/registerPerson")
-    public ResponseEntity<Void> registerPerson(@RequestBody PersonRegisterRequest person) throws Exception {
+    public ResponseEntity<Void> registerPerson(@Valid @RequestBody PersonRegisterRequest personRegisterRequest, BindingResult bindingResult) throws Exception {
         log.info("init controller person getListPersons");
 
-        if (personService.addPerson(person)) {
+        if (bindingResult.hasErrors()) {
+            throw new CustomValidationException(bindingResult);
+        }
+
+        if (personService.addPerson(personRegisterRequest)) {
             return ResponseEntity.status(HttpStatus.OK).build();
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+
+
  }

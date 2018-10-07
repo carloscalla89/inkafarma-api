@@ -23,7 +23,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<PersonSearchResponse> getListPerson() throws Exception {
         log.info("getListPerson:"+personDao);
-        log.info("personDao.getListPerson():"+personDao.getListPerson());
+
         return personDao.getListPerson().stream().map(r -> PersonSearchResponse.builder()
         .setNombre(r.getNombre())
         .setApellido(r.getApellido())

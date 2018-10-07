@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@Document(collection="PersonCollection")
+@Document(collection="PersonCollection2")
 public class PersonDTO {
     @Id
     private String _id;

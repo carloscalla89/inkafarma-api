@@ -32,23 +32,12 @@ public class RestExceptionHandler  extends ResponseEntityExceptionHandler {
 
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ResponseError> BadCredentialsException(
-            BadCredentialsException ex) {
-
-        ResponseError response = new ResponseError("BadCredential");
-        ResponseErrorDetail responseErrorDetail = new ResponseErrorDetail(ex.getMessage());
-        response.setErrors(Arrays.asList(responseErrorDetail));
-        return new ResponseEntity<>(response, new HttpHeaders(),HttpStatus.UNAUTHORIZED);
-
-    }
-
-
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ResponseError> handleAllExceptions(Exception ex) {
 
 
-        ResponseError response = new ResponseError("GeneralException");
+        ResponseError response = new ResponseError("General Exception");
+        log.error("error",ex);
         ResponseErrorDetail responseErrorDetail = new ResponseErrorDetail(ex.getMessage());
         response.setErrors(Arrays.asList(responseErrorDetail));
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

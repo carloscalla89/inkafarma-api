@@ -87,6 +87,14 @@ public class PersonControllerTest {
 
     }
 
+    @Test
+    public void getAverageAge() throws Exception {
+        PersonSearchResponse personSearchResponse =PersonSearchResponse.builder().setNombre("carlos").build();
+        when(personService.averageAge()).thenReturn(personSearchResponse);
+
+        personController.averageAge();
+    }
+
     private BindingResult getBindingResult(boolean hasError) {
 
         boolean hasErrorVal = hasError;

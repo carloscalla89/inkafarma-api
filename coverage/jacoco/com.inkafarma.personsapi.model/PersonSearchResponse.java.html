@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersonSearchResponse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persons-api</a> &gt; <a href="index.source.html" class="el_package">com.inkafarma.personsapi.model</a> &gt; <span class="el_source">PersonSearchResponse.java</span></div><h1>PersonSearchResponse.java</h1><pre class="source lang-java linenums">package com.inkafarma.personsapi.model;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+
+@Getter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class PersonSearchResponse {
+
+    @ApiModelProperty(notes = &quot;Nombre de la Persona&quot;,dataType = &quot;String&quot;,example = &quot;Carlos&quot;)
+<span class="nc" id="L12">    private String nombre;</span>
+
+    @ApiModelProperty(notes = &quot;Apellido de la Persona&quot;,dataType = &quot;String&quot;,example = &quot;Calla&quot;)
+<span class="nc" id="L15">    private String apellido;</span>
+
+    @ApiModelProperty(notes = &quot;Edad de la Persona&quot;,dataType = &quot;String&quot;,example = &quot;28&quot;)
+<span class="nc" id="L18">    private int edad;</span>
+
+    @ApiModelProperty(notes = &quot;Fecha de Nacimiento de la Persona&quot;,dataType = &quot;String&quot;,example = &quot;21/05/1989&quot;)
+<span class="nc" id="L21">    private String fechaNacimiento;</span>
+
+
+<span class="nc" id="L24">    private int edadPromedio;</span>
+
+    @ApiModelProperty(notes = &quot;Fecha probable de muerte la persona&quot;,dataType = &quot;String&quot;,example = &quot;14/03/2030&quot;)
+<span class="nc" id="L27">    private String fechaProbableMuerte;</span>
+
+    private PersonSearchResponse(String nombre, String apellido, int edad, String fechaNacimiento,
+<span class="fc" id="L30">                                 int edadPromedio, String fechaProbableMuerte) {</span>
+<span class="fc" id="L31">        this.nombre = nombre;</span>
+<span class="fc" id="L32">        this.apellido = apellido;</span>
+<span class="fc" id="L33">        this.edad = edad;</span>
+<span class="fc" id="L34">        this.fechaNacimiento = fechaNacimiento;</span>
+<span class="fc" id="L35">        this.edadPromedio = edadPromedio;</span>
+<span class="fc" id="L36">        this.fechaProbableMuerte = fechaProbableMuerte;</span>
+<span class="fc" id="L37">    }</span>
+
+<span class="fc" id="L39">    public static PersonBuilder builder() { return new PersonBuilder();}</span>
+
+<span class="fc" id="L41">    public static class PersonBuilder {</span>
+        private String nombre;
+        private String apellido;
+        private int edad;
+        private String fechaNacimiento;
+        private int edadPromedio;
+        private String fechaProbableMuerte;
+
+        public PersonBuilder setNombre(String nombre) {
+<span class="fc" id="L50">            this.nombre = nombre;</span>
+<span class="fc" id="L51">            return this;</span>
+        }
+
+        public PersonBuilder setApellido(String apellido) {
+<span class="nc" id="L55">            this.apellido = apellido;</span>
+<span class="nc" id="L56">            return this;</span>
+        }
+
+        public PersonBuilder setEdad(int edad) {
+<span class="nc" id="L60">            this.edad = edad;</span>
+<span class="nc" id="L61">            return this;</span>
+        }
+
+        public PersonBuilder setFechaNacimiento(String fechaNacimiento) {
+<span class="nc" id="L65">            this.fechaNacimiento = fechaNacimiento;</span>
+<span class="nc" id="L66">            return this;</span>
+        }
+
+        public PersonBuilder setEdadPromedio(int edadPromedio) {
+<span class="nc" id="L70">            this.edadPromedio = edadPromedio;</span>
+<span class="nc" id="L71">            return this;</span>
+        }
+
+        public PersonBuilder setFechaProbableMuerte(String fechaProbableMuerte) {
+<span class="nc" id="L75">            this.fechaProbableMuerte = fechaProbableMuerte;</span>
+<span class="nc" id="L76">            return this;</span>
+        }
+<span class="fc" id="L78">        public PersonSearchResponse build() { return new PersonSearchResponse(nombre, apellido, edad,</span>
+                fechaNacimiento, edadPromedio, fechaProbableMuerte);}
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersonController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persons-api</a> &gt; <a href="index.source.html" class="el_package">com.inkafarma.personsapi.expose.web</a> &gt; <span class="el_source">PersonController.java</span></div><h1>PersonController.java</h1><pre class="source lang-java linenums">package com.inkafarma.personsapi.expose.web;
+
+import com.inkafarma.personsapi.model.PersonRegisterRequest;
+import com.inkafarma.personsapi.model.PersonSearchResponse;
+import com.inkafarma.personsapi.model.ResponseError;
+import com.inkafarma.personsapi.service.PersonService;
+import com.inkafarma.personsapi.util.exception.CustomValidationException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/api-inkafarma&quot;)
+@Api(value=&quot;Api Person&quot;, description = &quot;Operaciones para el recurso que expone el API Persons&quot;)
+<span class="fc" id="L25">@Slf4j</span>
+public class PersonController {
+
+    private PersonService personService;
+
+    @Autowired
+<span class="fc" id="L31">    public PersonController(PersonService personService) {</span>
+<span class="fc" id="L32">        this.personService = personService;</span>
+<span class="fc" id="L33">    }</span>
+
+    @ApiOperation(value = &quot;Listar Personas&quot;, response  = PersonSearchResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = &quot;Listado Satisfactorio&quot;, responseContainer = &quot;List&quot;,  response = PersonSearchResponse.class),
+            @ApiResponse(code = 400, message = &quot;Recurso no disponible&quot;, response = ResponseError.class),
+            @ApiResponse(code = 500, message = &quot;Error en el servicio&quot;, response = ResponseError.class)
+    })
+    @GetMapping(value=&quot;/getPersons&quot;, produces = &quot;application/json&quot;)
+    public ResponseEntity&lt;List&lt;PersonSearchResponse&gt;&gt; getListPersons() throws Exception {
+<span class="fc" id="L43">        log.info(&quot;init controller person getListPersons&quot;);</span>
+<span class="fc" id="L44">        return ResponseEntity.ok(personService.getListPerson());</span>
+    }
+
+    @ApiOperation(value = &quot;Registrar una persona&quot; )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = &quot;Registro Satisfactorio&quot;),
+            @ApiResponse(code = 400, message = &quot;Recurso no disponible&quot;, response = ResponseError.class),
+            @ApiResponse(code = 500, message = &quot;Error en el servicio&quot;, response = ResponseError.class)
+    })
+    @PostMapping(value=&quot;/registerPerson&quot;)
+    public ResponseEntity&lt;Void&gt; registerPerson(@Valid @RequestBody PersonRegisterRequest personRegisterRequest, BindingResult bindingResult) throws Exception {
+<span class="fc" id="L55">        log.info(&quot;init controller person getListPersons&quot;);</span>
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (bindingResult.hasErrors()) {</span>
+<span class="fc" id="L58">            throw new CustomValidationException(bindingResult);</span>
+        }
+
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (personService.addPerson(personRegisterRequest)) {</span>
+<span class="fc" id="L62">            return ResponseEntity.status(HttpStatus.OK).build();</span>
+        } else {
+<span class="fc" id="L64">            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();</span>
+        }
+    }
+
+
+ }
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

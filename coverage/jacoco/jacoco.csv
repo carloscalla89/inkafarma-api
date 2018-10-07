@@ -1,0 +1,16 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+persons-api,com.inkafarma.personsapi.dao.impl,PersonDaoImpl,5,24,0,0,0,6,1,4,1,4
+persons-api,com.inkafarma.personsapi.expose.web,PersonController,0,42,0,4,0,12,0,6,0,4
+persons-api,com.inkafarma.personsapi.model,PersonSearchResponse,18,25,0,0,6,9,6,2,6,2
+persons-api,com.inkafarma.personsapi.model,PersonDTO,35,3,0,0,6,1,10,1,10,1
+persons-api,com.inkafarma.personsapi.model,PersonRegisterRequest,12,19,0,0,4,2,4,5,4,5
+persons-api,com.inkafarma.personsapi.model,ResponseError,20,0,0,0,6,0,5,0,5,0
+persons-api,com.inkafarma.personsapi.model,PersonSearchResponse.PersonBuilder,25,25,0,0,10,4,5,3,5,3
+persons-api,com.inkafarma.personsapi.model,ResponseErrorDetail,39,0,0,0,12,0,8,0,8,0
+persons-api,com.inkafarma.personsapi,PersonsApiApplication,5,3,0,0,2,1,1,1,1,1
+persons-api,com.inkafarma.personsapi.util.exception,RestExceptionHandler,96,7,0,0,19,2,4,2,4,2
+persons-api,com.inkafarma.personsapi.util.exception,DataNotFoundException,4,0,0,0,2,0,1,0,1,0
+persons-api,com.inkafarma.personsapi.util.exception,CustomValidationException,7,6,0,0,2,3,2,1,2,1
+persons-api,com.inkafarma.personsapi.service.impl,PersonServiceImpl,74,7,2,0,13,2,5,2,4,2
+persons-api,com.inkafarma.personsapi.config,ConfigProperties,0,25,0,0,0,8,0,3,0,3
+persons-api,com.inkafarma.personsapi.config,SwaggerConfig,0,65,0,0,0,17,0,4,0,4

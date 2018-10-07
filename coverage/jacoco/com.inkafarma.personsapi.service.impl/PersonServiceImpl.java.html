@@ -5,6 +5,9 @@ import com.inkafarma.personsapi.model.PersonRegisterRequest;
 import com.inkafarma.personsapi.model.PersonSearchResponse;
 import com.inkafarma.personsapi.model.PersonDTO;
 import com.inkafarma.personsapi.service.PersonService;
+import com.inkafarma.personsapi.util.Utilitario;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,33 +17,49 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-<span class="fc" id="L17">@Slf4j</span>
-<span class="fc" id="L18">public class PersonServiceImpl implements PersonService {</span>
+<span class="fc" id="L20">@Slf4j</span>
+@Getter
+<span class="fc" id="L22">@Setter</span>
+<span class="fc" id="L23">public class PersonServiceImpl implements PersonService {</span>
 
     @Autowired
-    private PersonDao personDao;
+<span class="nc" id="L26">    private PersonDao personDao;</span>
 
     @Override
     public List&lt;PersonSearchResponse&gt; getListPerson() throws Exception {
-<span class="nc" id="L25">        log.info(&quot;getListPerson:&quot;+personDao);</span>
+<span class="fc" id="L30">        log.info(&quot;getListPerson:&quot;+personDao);</span>
 
-<span class="nc" id="L27">        return personDao.getListPerson().stream().map(r -&gt; PersonSearchResponse.builder()</span>
-<span class="nc" id="L28">        .setNombre(r.getNombre())</span>
-<span class="nc" id="L29">        .setApellido(r.getApellido())</span>
-<span class="nc" id="L30">        .setEdad(r.getEdad())</span>
-<span class="nc" id="L31">        .setFechaNacimiento(r.getFechaNacimiento())</span>
-<span class="nc" id="L32">        .build()).collect(Collectors.toList());</span>
+<span class="fc" id="L32">        return personDao.getListPerson().stream().map(r -&gt; PersonSearchResponse.builder()</span>
+<span class="fc" id="L33">                .setNombre(r.getName())</span>
+<span class="fc" id="L34">                .setApellido(r.getLastname())</span>
+<span class="fc" id="L35">                .setEdad(r.getAge())</span>
+<span class="fc" id="L36">                .setFechaNacimiento(r.getBirthDate())</span>
+<span class="fc" id="L37">                .setFechaProbableMuerte(Utilitario.getDeathDateEstimate(r.getBirthDate()))</span>
+<span class="fc" id="L38">        .build()).collect(Collectors.toList());</span>
     }
 
     @Override
     public boolean addPerson(PersonRegisterRequest personRegisterRequest) throws Exception {
-<span class="nc" id="L37">        PersonDTO personDTO = new PersonDTO();</span>
-<span class="nc" id="L38">        personDTO.setNombre(personRegisterRequest.getNombre());</span>
-<span class="nc" id="L39">        personDTO.setApellido(personRegisterRequest.getApellido());</span>
-<span class="nc" id="L40">        personDTO.setEdad(personRegisterRequest.getEdad());</span>
-<span class="nc" id="L41">        personDTO.setFechaNacimiento(personRegisterRequest.getFechaNacimiento());</span>
+<span class="fc" id="L43">        PersonDTO personDTO = new PersonDTO();</span>
+<span class="fc" id="L44">        personDTO.setName(personRegisterRequest.getName());</span>
+<span class="fc" id="L45">        personDTO.setLastname(personRegisterRequest.getLastName());</span>
+<span class="fc" id="L46">        personDTO.setAge(personRegisterRequest.getAge());</span>
+<span class="fc" id="L47">        personDTO.setBirthDate(personRegisterRequest.getBirthDate());</span>
 
-<span class="nc bnc" id="L43" title="All 2 branches missed.">        return Optional.ofNullable(personDao.addPerson(personDTO).get_id()).filter(r -&gt; r.length()&gt;0 ).isPresent();</span>
+<span class="pc bnc" id="L49" title="All 2 branches missed.">        return Optional.ofNullable(personDao.addPerson(personDTO).get_id()).filter(r -&gt; r.length()&gt;0 ).isPresent();</span>
+    }
+
+    @Override
+    public PersonSearchResponse averageAge() throws Exception {
+
+<span class="fc" id="L55">        return PersonSearchResponse</span>
+<span class="fc" id="L56">                .builder()</span>
+<span class="fc" id="L57">                .setEdadPromedio((int) (personDao</span>
+<span class="fc" id="L58">                        .getListPerson().stream()</span>
+<span class="fc" id="L59">                        .mapToInt(PersonDTO::getAge).average().getAsDouble()))</span>
+<span class="fc" id="L60">                .build();</span>
+
+
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

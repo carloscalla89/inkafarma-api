@@ -15,19 +15,19 @@ public class PersonSearchResponse {
 <span class="nc" id="L15">    private String apellido;</span>
 
     @ApiModelProperty(notes = &quot;Edad de la Persona&quot;,dataType = &quot;String&quot;,example = &quot;28&quot;)
-<span class="nc" id="L18">    private int edad;</span>
+<span class="nc" id="L18">    private Integer edad;</span>
 
     @ApiModelProperty(notes = &quot;Fecha de Nacimiento de la Persona&quot;,dataType = &quot;String&quot;,example = &quot;21/05/1989&quot;)
 <span class="nc" id="L21">    private String fechaNacimiento;</span>
 
 
-<span class="nc" id="L24">    private int edadPromedio;</span>
+<span class="nc" id="L24">    private Integer edadPromedio;</span>
 
     @ApiModelProperty(notes = &quot;Fecha probable de muerte la persona&quot;,dataType = &quot;String&quot;,example = &quot;14/03/2030&quot;)
 <span class="nc" id="L27">    private String fechaProbableMuerte;</span>
 
-    private PersonSearchResponse(String nombre, String apellido, int edad, String fechaNacimiento,
-<span class="fc" id="L30">                                 int edadPromedio, String fechaProbableMuerte) {</span>
+    private PersonSearchResponse(String nombre, String apellido, Integer edad, String fechaNacimiento,
+<span class="fc" id="L30">                                 Integer edadPromedio, String fechaProbableMuerte) {</span>
 <span class="fc" id="L31">        this.nombre = nombre;</span>
 <span class="fc" id="L32">        this.apellido = apellido;</span>
 <span class="fc" id="L33">        this.edad = edad;</span>
@@ -41,9 +41,9 @@ public class PersonSearchResponse {
 <span class="fc" id="L41">    public static class PersonBuilder {</span>
         private String nombre;
         private String apellido;
-        private int edad;
+        private Integer edad;
         private String fechaNacimiento;
-        private int edadPromedio;
+        private Integer edadPromedio;
         private String fechaProbableMuerte;
 
         public PersonBuilder setNombre(String nombre) {
@@ -52,28 +52,28 @@ public class PersonSearchResponse {
         }
 
         public PersonBuilder setApellido(String apellido) {
-<span class="nc" id="L55">            this.apellido = apellido;</span>
-<span class="nc" id="L56">            return this;</span>
+<span class="fc" id="L55">            this.apellido = apellido;</span>
+<span class="fc" id="L56">            return this;</span>
         }
 
-        public PersonBuilder setEdad(int edad) {
-<span class="nc" id="L60">            this.edad = edad;</span>
-<span class="nc" id="L61">            return this;</span>
+        public PersonBuilder setEdad(Integer edad) {
+<span class="fc" id="L60">            this.edad = edad;</span>
+<span class="fc" id="L61">            return this;</span>
         }
 
         public PersonBuilder setFechaNacimiento(String fechaNacimiento) {
-<span class="nc" id="L65">            this.fechaNacimiento = fechaNacimiento;</span>
-<span class="nc" id="L66">            return this;</span>
+<span class="fc" id="L65">            this.fechaNacimiento = fechaNacimiento;</span>
+<span class="fc" id="L66">            return this;</span>
         }
 
-        public PersonBuilder setEdadPromedio(int edadPromedio) {
-<span class="nc" id="L70">            this.edadPromedio = edadPromedio;</span>
-<span class="nc" id="L71">            return this;</span>
+        public PersonBuilder setEdadPromedio(Integer edadPromedio) {
+<span class="fc" id="L70">            this.edadPromedio = edadPromedio;</span>
+<span class="fc" id="L71">            return this;</span>
         }
 
         public PersonBuilder setFechaProbableMuerte(String fechaProbableMuerte) {
-<span class="nc" id="L75">            this.fechaProbableMuerte = fechaProbableMuerte;</span>
-<span class="nc" id="L76">            return this;</span>
+<span class="fc" id="L75">            this.fechaProbableMuerte = fechaProbableMuerte;</span>
+<span class="fc" id="L76">            return this;</span>
         }
 <span class="fc" id="L78">        public PersonSearchResponse build() { return new PersonSearchResponse(nombre, apellido, edad,</span>
                 fechaNacimiento, edadPromedio, fechaProbableMuerte);}

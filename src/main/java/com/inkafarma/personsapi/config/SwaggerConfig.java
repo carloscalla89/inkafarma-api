@@ -42,7 +42,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
         return new ApiInfoBuilder()
                 .title("API REST PERSONS")
                 .description("\"Spring Boot REST API para el Recurso Persona\"")
-                .version("1.0.0")
+                .version("2.0.0")
                 .build();
     }
 

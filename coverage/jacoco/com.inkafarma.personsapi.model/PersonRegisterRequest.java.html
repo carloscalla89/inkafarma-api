@@ -18,22 +18,22 @@ import javax.validation.constraints.Pattern;
     @ApiModelProperty(notes = &quot;Nombre de la Persona&quot;,dataType = &quot;String&quot;,example = &quot;Carlos&quot;)
     @NotEmpty
     @NotNull
-<span class="nc" id="L21">    private String nombre;</span>
+<span class="fc" id="L21">    private String name;</span>
 
     @NotEmpty
     @NotNull
     @ApiModelProperty(notes = &quot;Apellido de la Persona&quot;,dataType = &quot;String&quot;,example = &quot;Calla&quot;)
-<span class="nc" id="L26">    private String apellido;</span>
+<span class="fc" id="L26">    private String lastName;</span>
 
     @NotNull
     @ApiModelProperty(notes = &quot;Edad de la Persona&quot;,dataType = &quot;String&quot;,example = &quot;28&quot;)
-<span class="nc" id="L30">    private Integer edad;</span>
+<span class="fc" id="L30">    private Integer age;</span>
 
     @Pattern(regexp=&quot;^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$&quot;,
             message=&quot;Formato de fecha incorrecto. El formato es YYYY-mm-dd&quot;)
     @NotEmpty
     @NotNull
     @ApiModelProperty(notes = &quot;Fecha de Nacimiento de la Persona&quot;,dataType = &quot;String&quot;,example = &quot;1989/05/21&quot;)
-<span class="nc" id="L37">    private String fechaNacimiento;</span>
+<span class="fc" id="L37">    private String birthDate;</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

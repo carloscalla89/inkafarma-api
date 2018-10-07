@@ -52,10 +52,10 @@ public class PersonControllerTest {
     @Test
     public void registerPersonSuccess() throws Exception {
         PersonRegisterRequest personRegisterRequest = new PersonRegisterRequest();
-        personRegisterRequest.setNombre("carlos");
-        personRegisterRequest.setApellido("calla");
-        personRegisterRequest.setEdad(29);
-        personRegisterRequest.setFechaNacimiento("1989-05-21");
+        personRegisterRequest.setName("carlos");
+        personRegisterRequest.setLastName("calla");
+        personRegisterRequest.setAge(29);
+        personRegisterRequest.setBirthDate("1989-05-21");
 
         when(personService.addPerson(any(PersonRegisterRequest.class))).thenReturn(true);
         personController.registerPerson(personRegisterRequest,getBindingResult(false));
@@ -65,10 +65,10 @@ public class PersonControllerTest {
     @Test(expected = CustomValidationException.class)
     public void registerPersonErrorValidation() throws Exception {
         PersonRegisterRequest personRegisterRequest = new PersonRegisterRequest();
-        personRegisterRequest.setNombre("carlos");
-        personRegisterRequest.setApellido("calla");
-        personRegisterRequest.setEdad(29);
-        personRegisterRequest.setFechaNacimiento("1989/05-21");
+        personRegisterRequest.setName("carlos");
+        personRegisterRequest.setLastName("calla");
+        personRegisterRequest.setAge(29);
+        personRegisterRequest.setBirthDate("1989/05-21");
 
         personController.registerPerson(personRegisterRequest,getBindingResult(true));
 
@@ -77,10 +77,10 @@ public class PersonControllerTest {
     @Test
     public void registerPersonErrorRegister() throws Exception {
         PersonRegisterRequest personRegisterRequest = new PersonRegisterRequest();
-        personRegisterRequest.setNombre("carlos");
-        personRegisterRequest.setApellido("calla");
-        personRegisterRequest.setEdad(29);
-        personRegisterRequest.setFechaNacimiento("1989/05-21");
+        personRegisterRequest.setName("carlos");
+        personRegisterRequest.setLastName("calla");
+        personRegisterRequest.setAge(29);
+        personRegisterRequest.setBirthDate("1989/05-21");
 
         when(personService.addPerson(any(PersonRegisterRequest.class))).thenReturn(false);
         personController.registerPerson(personRegisterRequest,getBindingResult(false));

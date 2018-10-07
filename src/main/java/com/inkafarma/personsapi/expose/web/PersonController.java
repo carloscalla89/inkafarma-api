@@ -52,7 +52,7 @@ public class PersonController {
     })
     @PostMapping(value="/registerPerson")
     public ResponseEntity<Void> registerPerson(@Valid @RequestBody PersonRegisterRequest personRegisterRequest, BindingResult bindingResult) throws Exception {
-        log.info("init controller person getListPersons");
+        log.info("init controller person registerPerson");
 
         if (bindingResult.hasErrors()) {
             throw new CustomValidationException(bindingResult);
@@ -65,5 +65,18 @@ public class PersonController {
         }
     }
 
+    @ApiOperation(value = "Promedio de edad de las personas" )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Consulta Satisfactoria"),
+            @ApiResponse(code = 400, message = "Recurso no disponible", response = ResponseError.class),
+            @ApiResponse(code = 500, message = "Error en el servicio", response = ResponseError.class)
+    })
+    @GetMapping(value="/averageAge")
+    public ResponseEntity<PersonSearchResponse> averageAge() throws Exception {
+        log.info("init controller person averageAge");
+
+        return ResponseEntity.ok(personService.averageAge());
+
+    }
 
  }

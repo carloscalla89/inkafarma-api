@@ -15,19 +15,19 @@ public class PersonSearchResponse {
     private String apellido;
 
     @ApiModelProperty(notes = "Edad de la Persona",dataType = "String",example = "28")
-    private int edad;
+    private Integer edad;
 
     @ApiModelProperty(notes = "Fecha de Nacimiento de la Persona",dataType = "String",example = "21/05/1989")
     private String fechaNacimiento;
 
 
-    private int edadPromedio;
+    private Integer edadPromedio;
 
     @ApiModelProperty(notes = "Fecha probable de muerte la persona",dataType = "String",example = "14/03/2030")
     private String fechaProbableMuerte;
 
-    private PersonSearchResponse(String nombre, String apellido, int edad, String fechaNacimiento,
-                                 int edadPromedio, String fechaProbableMuerte) {
+    private PersonSearchResponse(String nombre, String apellido, Integer edad, String fechaNacimiento,
+                                 Integer edadPromedio, String fechaProbableMuerte) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
@@ -41,9 +41,9 @@ public class PersonSearchResponse {
     public static class PersonBuilder {
         private String nombre;
         private String apellido;
-        private int edad;
+        private Integer edad;
         private String fechaNacimiento;
-        private int edadPromedio;
+        private Integer edadPromedio;
         private String fechaProbableMuerte;
 
         public PersonBuilder setNombre(String nombre) {
@@ -56,7 +56,7 @@ public class PersonSearchResponse {
             return this;
         }
 
-        public PersonBuilder setEdad(int edad) {
+        public PersonBuilder setEdad(Integer edad) {
             this.edad = edad;
             return this;
         }
@@ -66,7 +66,7 @@ public class PersonSearchResponse {
             return this;
         }
 
-        public PersonBuilder setEdadPromedio(int edadPromedio) {
+        public PersonBuilder setEdadPromedio(Integer edadPromedio) {
             this.edadPromedio = edadPromedio;
             return this;
         }

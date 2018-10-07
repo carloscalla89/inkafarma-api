@@ -7,13 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@Document(collection="PersonCollection2")
+@Document(collection="PersonCollection")
 public class PersonDTO {
     @Id
     private String _id;
-    private String nombre;
-    private String apellido;
-    private int edad;
-    private String fechaNacimiento;
+    private String name;
+    private String lastname;
+    private Integer age;
+    private String birthDate;
 
 }

@@ -8,4 +8,5 @@ import java.util.List;
 public interface PersonService {
     List<PersonSearchResponse> getListPerson() throws Exception;
     boolean addPerson(PersonRegisterRequest personRegisterRequest) throws Exception;
+    PersonSearchResponse averageAge() throws Exception;
 }

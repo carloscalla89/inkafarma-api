@@ -33,6 +33,6 @@ public class PersonRegisterRequest {
             message="Formato de fecha incorrecto. El formato es YYYY-mm-dd")
     @NotEmpty
     @NotNull
-    @ApiModelProperty(notes = "Fecha de Nacimiento de la Persona",dataType = "String",example = "1989/05/21")
+    @ApiModelProperty(notes = "Fecha de Nacimiento de la Persona",dataType = "String",example = "1989-05-21")
     private String birthDate;
 }

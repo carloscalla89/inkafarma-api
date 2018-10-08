@@ -9,74 +9,74 @@ import lombok.Getter;
 public class PersonSearchResponse {
 
     @ApiModelProperty(notes = "Nombre de la Persona",dataType = "String",example = "Carlos")
-    private String nombre;
+    private String name;
 
     @ApiModelProperty(notes = "Apellido de la Persona",dataType = "String",example = "Calla")
-    private String apellido;
+    private String lastName;
 
     @ApiModelProperty(notes = "Edad de la Persona",dataType = "String",example = "28")
-    private Integer edad;
+    private Integer age;
 
     @ApiModelProperty(notes = "Fecha de Nacimiento de la Persona",dataType = "String",example = "21/05/1989")
-    private String fechaNacimiento;
+    private String birthDate;
 
 
-    private Integer edadPromedio;
+    private Integer averageAge;
 
     @ApiModelProperty(notes = "Fecha probable de muerte la persona",dataType = "String",example = "14/03/2030")
-    private String fechaProbableMuerte;
+    private String deathDateProbable;
 
     private PersonSearchResponse(String nombre, String apellido, Integer edad, String fechaNacimiento,
                                  Integer edadPromedio, String fechaProbableMuerte) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.edad = edad;
-        this.fechaNacimiento = fechaNacimiento;
-        this.edadPromedio = edadPromedio;
-        this.fechaProbableMuerte = fechaProbableMuerte;
+        this.name = nombre;
+        this.lastName = apellido;
+        this.age = edad;
+        this.birthDate = fechaNacimiento;
+        this.averageAge = edadPromedio;
+        this.deathDateProbable = fechaProbableMuerte;
     }
 
     public static PersonBuilder builder() { return new PersonBuilder();}
 
     public static class PersonBuilder {
-        private String nombre;
-        private String apellido;
-        private Integer edad;
-        private String fechaNacimiento;
-        private Integer edadPromedio;
-        private String fechaProbableMuerte;
+        private String name;
+        private String lastName;
+        private Integer age;
+        private String birthDate;
+        private Integer averageAge;
+        private String deathDateProbable;
 
         public PersonBuilder setNombre(String nombre) {
-            this.nombre = nombre;
+            this.name = nombre;
             return this;
         }
 
         public PersonBuilder setApellido(String apellido) {
-            this.apellido = apellido;
+            this.lastName = apellido;
             return this;
         }
 
         public PersonBuilder setEdad(Integer edad) {
-            this.edad = edad;
+            this.age = edad;
             return this;
         }
 
         public PersonBuilder setFechaNacimiento(String fechaNacimiento) {
-            this.fechaNacimiento = fechaNacimiento;
+            this.birthDate = fechaNacimiento;
             return this;
         }
 
         public PersonBuilder setEdadPromedio(Integer edadPromedio) {
-            this.edadPromedio = edadPromedio;
+            this.averageAge = edadPromedio;
             return this;
         }
 
         public PersonBuilder setFechaProbableMuerte(String fechaProbableMuerte) {
-            this.fechaProbableMuerte = fechaProbableMuerte;
+            this.deathDateProbable = fechaProbableMuerte;
             return this;
         }
-        public PersonSearchResponse build() { return new PersonSearchResponse(nombre, apellido, edad,
-                fechaNacimiento, edadPromedio, fechaProbableMuerte);}
+        public PersonSearchResponse build() { return new PersonSearchResponse(name, lastName, age,
+                birthDate, averageAge, deathDateProbable);}
     }
 
 }

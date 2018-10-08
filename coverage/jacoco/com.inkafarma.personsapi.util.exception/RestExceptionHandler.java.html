@@ -8,8 +8,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Arrays;
@@ -18,17 +21,17 @@ import java.util.stream.Collectors;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-<span class="fc" id="L21">@Slf4j</span>
-<span class="fc" id="L22">public class RestExceptionHandler  extends ResponseEntityExceptionHandler {</span>
+<span class="fc" id="L24">@Slf4j</span>
+<span class="fc" id="L25">public class RestExceptionHandler  extends ResponseEntityExceptionHandler {</span>
 
     @ExceptionHandler(DataNotFoundException.class)
     public ResponseEntity&lt;ResponseError&gt; DataNotFoundException(
             DataNotFoundException ex) {
 
-<span class="nc" id="L28">        ResponseError response = new ResponseError(&quot;Error DataNotFound&quot;);</span>
-<span class="nc" id="L29">        ResponseErrorDetail responseErrorDetail = new ResponseErrorDetail(ex.getMessage());</span>
-<span class="nc" id="L30">        response.setErrors(Arrays.asList(responseErrorDetail));</span>
-<span class="nc" id="L31">        return new ResponseEntity&lt;&gt;(response, new HttpHeaders(),HttpStatus.NOT_FOUND);</span>
+<span class="nc" id="L31">        ResponseError response = new ResponseError(&quot;Error DataNotFound&quot;);</span>
+<span class="nc" id="L32">        ResponseErrorDetail responseErrorDetail = new ResponseErrorDetail(ex.getMessage());</span>
+<span class="nc" id="L33">        response.setErrors(Arrays.asList(responseErrorDetail));</span>
+<span class="nc" id="L34">        return new ResponseEntity&lt;&gt;(response, new HttpHeaders(),HttpStatus.NOT_FOUND);</span>
 
     }
 
@@ -36,29 +39,72 @@ import java.util.stream.Collectors;
     public final ResponseEntity&lt;ResponseError&gt; handleAllExceptions(Exception ex) {
 
 
-<span class="nc" id="L39">        ResponseError response = new ResponseError(&quot;General Exception&quot;);</span>
-<span class="nc" id="L40">        log.error(&quot;error&quot;,ex);</span>
-<span class="nc" id="L41">        ResponseErrorDetail responseErrorDetail = new ResponseErrorDetail(ex.getMessage());</span>
-<span class="nc" id="L42">        response.setErrors(Arrays.asList(responseErrorDetail));</span>
-<span class="nc" id="L43">        return new ResponseEntity&lt;&gt;(response, HttpStatus.INTERNAL_SERVER_ERROR);</span>
+<span class="nc" id="L42">        ResponseError response = new ResponseError(&quot;General Exception&quot;);</span>
+<span class="nc" id="L43">        log.error(&quot;error&quot;,ex);</span>
+<span class="nc" id="L44">        ResponseErrorDetail responseErrorDetail = new ResponseErrorDetail(ex.getMessage());</span>
+<span class="nc" id="L45">        response.setErrors(Arrays.asList(responseErrorDetail));</span>
+<span class="nc" id="L46">        return new ResponseEntity&lt;&gt;(response, HttpStatus.INTERNAL_SERVER_ERROR);</span>
     }
 
     @ExceptionHandler(CustomValidationException.class)
     public ResponseEntity&lt;ResponseError&gt; customValidationException(
             CustomValidationException ex) {
 
-<span class="nc" id="L50">        List&lt;ResponseErrorDetail&gt; responseErrorList= ex.getBindingResult().getFieldErrors()</span>
-<span class="nc" id="L51">                .stream()</span>
-<span class="nc" id="L52">                .map(fieldError -&gt; new ResponseErrorDetail(</span>
-<span class="nc" id="L53">                        fieldError.getField(),</span>
-<span class="nc" id="L54">                        fieldError.getCode(),</span>
-<span class="nc" id="L55">                        fieldError.getDefaultMessage()))</span>
-<span class="nc" id="L56">                .collect(Collectors.toList());</span>
-<span class="nc" id="L57">        ResponseError response = new ResponseError(&quot;Error in Validations&quot;);</span>
-<span class="nc" id="L58">        response.setErrors(responseErrorList);</span>
+<span class="nc" id="L53">        List&lt;ResponseErrorDetail&gt; responseErrorList= ex.getBindingResult().getFieldErrors()</span>
+<span class="nc" id="L54">                .stream()</span>
+<span class="nc" id="L55">                .map(fieldError -&gt; new ResponseErrorDetail(</span>
+<span class="nc" id="L56">                        fieldError.getField(),</span>
+<span class="nc" id="L57">                        fieldError.getCode(),</span>
+<span class="nc" id="L58">                        fieldError.getDefaultMessage()))</span>
+<span class="nc" id="L59">                .collect(Collectors.toList());</span>
+<span class="nc" id="L60">        ResponseError response = new ResponseError(&quot;Error in Validations&quot;);</span>
+<span class="nc" id="L61">        response.setErrors(responseErrorList);</span>
 
-<span class="nc" id="L60">        return new ResponseEntity&lt;&gt;(response, new HttpHeaders(),HttpStatus.BAD_REQUEST);</span>
+<span class="nc" id="L63">        return new ResponseEntity&lt;&gt;(response, new HttpHeaders(),HttpStatus.BAD_REQUEST);</span>
 
+    }
+
+    @Override
+    protected ResponseEntity&lt;Object&gt; handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status,
+                                                                  WebRequest request) {
+<span class="nc" id="L72">        List&lt;ResponseErrorDetail&gt; responseErrorList= ex.getBindingResult().getFieldErrors()</span>
+<span class="nc" id="L73">                .stream()</span>
+<span class="nc" id="L74">                .map(fieldError -&gt; new ResponseErrorDetail(</span>
+<span class="nc" id="L75">                        fieldError.getField(),</span>
+<span class="nc" id="L76">                        fieldError.getCode(),</span>
+<span class="nc" id="L77">                        fieldError.getDefaultMessage()))</span>
+<span class="nc" id="L78">                .collect(Collectors.toList());</span>
+<span class="nc" id="L79">        ResponseError response = new ResponseError(&quot;Error in Validations&quot;);</span>
+<span class="nc" id="L80">        response.setErrors(responseErrorList);</span>
+
+<span class="nc" id="L82">        return new ResponseEntity&lt;&gt;(response, new HttpHeaders(),HttpStatus.BAD_REQUEST);</span>
+    }
+
+    @Override
+    protected ResponseEntity&lt;Object&gt; handleHttpRequestMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex,
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request) {
+<span class="nc" id="L91">        StringBuilder builder = new StringBuilder();</span>
+<span class="nc" id="L92">        builder.append(ex.getMethod());</span>
+<span class="nc" id="L93">        builder.append(</span>
+                &quot; method is not supported for this request. Supported methods are &quot;);
+<span class="nc" id="L95">        ex.getSupportedHttpMethods().forEach(t -&gt; builder.append(t + &quot; &quot;));</span>
+
+<span class="nc" id="L97">        ResponseError response = new ResponseError(&quot;MethodNotSupported&quot;);</span>
+
+
+
+<span class="nc" id="L101">        ResponseErrorDetail responseErrorDetail = new ResponseErrorDetail(ex.getLocalizedMessage(),builder.toString());</span>
+
+<span class="nc" id="L103">        response.setErrors(Arrays.asList(responseErrorDetail));</span>
+
+
+<span class="nc" id="L106">        return new ResponseEntity&lt;&gt;(</span>
+                response, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -18,6 +18,11 @@ public class ResponseErrorDetail {
     @ApiModelProperty(notes = "Descripción del detalle del error",dataType = "Object")
     private Object description;
 
+    public ResponseErrorDetail(String field, Object rejectedValue) {
+        this.field = field;
+        this.description = rejectedValue;
+    }
+
     public ResponseErrorDetail(String field, String code, Object rejectedValue) {
         this.field = field;
         this.code = code;

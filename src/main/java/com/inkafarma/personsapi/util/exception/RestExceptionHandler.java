@@ -8,8 +8,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Arrays;
@@ -59,5 +62,48 @@ public class RestExceptionHandler  extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(response, new HttpHeaders(),HttpStatus.BAD_REQUEST);
 
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status,
+                                                                  WebRequest request) {
+        List<ResponseErrorDetail> responseErrorList= ex.getBindingResult().getFieldErrors()
+                .stream()
+                .map(fieldError -> new ResponseErrorDetail(
+                        fieldError.getField(),
+                        fieldError.getCode(),
+                        fieldError.getDefaultMessage()))
+                .collect(Collectors.toList());
+        ResponseError response = new ResponseError("Error in Validations");
+        response.setErrors(responseErrorList);
+
+        return new ResponseEntity<>(response, new HttpHeaders(),HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex,
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(ex.getMethod());
+        builder.append(
+                " method is not supported for this request. Supported methods are ");
+        ex.getSupportedHttpMethods().forEach(t -> builder.append(t + " "));
+
+        ResponseError response = new ResponseError("MethodNotSupported");
+
+
+
+        ResponseErrorDetail responseErrorDetail = new ResponseErrorDetail(ex.getLocalizedMessage(),builder.toString());
+
+        response.setErrors(Arrays.asList(responseErrorDetail));
+
+
+        return new ResponseEntity<>(
+                response, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 }

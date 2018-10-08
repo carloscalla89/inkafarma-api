@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 
 <span class="fc" id="L32">        return personDao.getListPerson().stream().map(r -&gt; PersonSearchResponse.builder()</span>
 <span class="fc" id="L33">                .setNombre(r.getName())</span>
-<span class="fc" id="L34">                .setApellido(r.getLastname())</span>
+<span class="fc" id="L34">                .setApellido(r.getLastName())</span>
 <span class="fc" id="L35">                .setEdad(r.getAge())</span>
 <span class="fc" id="L36">                .setFechaNacimiento(r.getBirthDate())</span>
 <span class="fc" id="L37">                .setFechaProbableMuerte(Utilitario.getDeathDateEstimate(r.getBirthDate()))</span>
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
     public boolean addPerson(PersonRegisterRequest personRegisterRequest) throws Exception {
 <span class="fc" id="L43">        PersonDTO personDTO = new PersonDTO();</span>
 <span class="fc" id="L44">        personDTO.setName(personRegisterRequest.getName());</span>
-<span class="fc" id="L45">        personDTO.setLastname(personRegisterRequest.getLastName());</span>
+<span class="fc" id="L45">        personDTO.setLastName(personRegisterRequest.getLastName());</span>
 <span class="fc" id="L46">        personDTO.setAge(personRegisterRequest.getAge());</span>
 <span class="fc" id="L47">        personDTO.setBirthDate(personRegisterRequest.getBirthDate());</span>
 

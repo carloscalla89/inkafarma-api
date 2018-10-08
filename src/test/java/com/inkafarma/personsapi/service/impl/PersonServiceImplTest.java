@@ -33,8 +33,9 @@ public class PersonServiceImplTest {
 
     @Test
     public void getListPerson() throws Exception {
-
-        when(personDao.getListPerson()).thenReturn(Arrays.asList(new PersonDTO()));
+        PersonDTO personDTO = new PersonDTO();
+        personDTO.setBirthDate("1999-08-16");
+        when(personDao.getListPerson()).thenReturn(Arrays.asList(personDTO));
         personService.getListPerson();
     }
 

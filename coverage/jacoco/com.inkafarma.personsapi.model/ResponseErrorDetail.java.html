@@ -18,14 +18,19 @@ public class ResponseErrorDetail {
     @ApiModelProperty(notes = &quot;Descripción del detalle del error&quot;,dataType = &quot;Object&quot;)
 <span class="nc" id="L19">    private Object description;</span>
 
-<span class="nc" id="L21">    public ResponseErrorDetail(String field, String code, Object rejectedValue) {</span>
+<span class="nc" id="L21">    public ResponseErrorDetail(String field, Object rejectedValue) {</span>
 <span class="nc" id="L22">        this.field = field;</span>
-<span class="nc" id="L23">        this.code = code;</span>
-<span class="nc" id="L24">        this.description = rejectedValue;</span>
-<span class="nc" id="L25">    }</span>
-<span class="nc" id="L26">    public ResponseErrorDetail(Object rejectedValue) {</span>
-<span class="nc" id="L27">        this.description = rejectedValue;</span>
+<span class="nc" id="L23">        this.description = rejectedValue;</span>
+<span class="nc" id="L24">    }</span>
 
-<span class="nc" id="L29">    }</span>
+<span class="nc" id="L26">    public ResponseErrorDetail(String field, String code, Object rejectedValue) {</span>
+<span class="nc" id="L27">        this.field = field;</span>
+<span class="nc" id="L28">        this.code = code;</span>
+<span class="nc" id="L29">        this.description = rejectedValue;</span>
+<span class="nc" id="L30">    }</span>
+<span class="nc" id="L31">    public ResponseErrorDetail(Object rejectedValue) {</span>
+<span class="nc" id="L32">        this.description = rejectedValue;</span>
+
+<span class="nc" id="L34">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

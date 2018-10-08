@@ -12,7 +12,7 @@ public class PersonDTO {
     @Id
     private String _id;
     private String name;
-    private String lastname;
+    private String lastName;
     private Integer age;
     private String birthDate;
 

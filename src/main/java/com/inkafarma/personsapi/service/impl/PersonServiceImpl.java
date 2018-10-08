@@ -31,7 +31,7 @@ public class PersonServiceImpl implements PersonService {
 
         return personDao.getListPerson().stream().map(r -> PersonSearchResponse.builder()
                 .setNombre(r.getName())
-                .setApellido(r.getLastname())
+                .setApellido(r.getLastName())
                 .setEdad(r.getAge())
                 .setFechaNacimiento(r.getBirthDate())
                 .setFechaProbableMuerte(Utilitario.getDeathDateEstimate(r.getBirthDate()))
@@ -42,7 +42,7 @@ public class PersonServiceImpl implements PersonService {
     public boolean addPerson(PersonRegisterRequest personRegisterRequest) throws Exception {
         PersonDTO personDTO = new PersonDTO();
         personDTO.setName(personRegisterRequest.getName());
-        personDTO.setLastname(personRegisterRequest.getLastName());
+        personDTO.setLastName(personRegisterRequest.getLastName());
         personDTO.setAge(personRegisterRequest.getAge());
         personDTO.setBirthDate(personRegisterRequest.getBirthDate());
 

@@ -4,7 +4,7 @@ persons-api,com.inkafarma.personsapi.util,Utilitario,3,46,0,0,1,6,1,1,1,1
 persons-api,com.inkafarma.personsapi.expose.web,PersonController,0,50,0,4,0,14,0,7,0,5
 persons-api,com.inkafarma.personsapi.model,PersonSearchResponse,18,25,0,0,6,9,6,2,6,2
 persons-api,com.inkafarma.personsapi.model,PersonDTO,4,34,0,0,0,7,1,10,1,10
-persons-api,com.inkafarma.personsapi.model,PersonRegisterRequest,0,31,0,0,0,6,0,9,0,9
+persons-api,com.inkafarma.personsapi.model,PersonRegisterRequest,31,0,0,0,6,0,9,0,9,0
 persons-api,com.inkafarma.personsapi.model,ResponseError,20,0,0,0,6,0,5,0,5,0
 persons-api,com.inkafarma.personsapi.model,PersonSearchResponse.PersonBuilder,0,50,0,0,0,14,0,8,0,8
 persons-api,com.inkafarma.personsapi.model,ResponseErrorDetail,48,0,0,0,16,0,9,0,9,0

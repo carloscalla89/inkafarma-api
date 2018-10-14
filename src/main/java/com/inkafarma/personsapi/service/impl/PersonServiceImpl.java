@@ -5,6 +5,7 @@ import com.inkafarma.personsapi.model.PersonRegisterRequest;
 import com.inkafarma.personsapi.model.PersonSearchResponse;
 import com.inkafarma.personsapi.model.PersonDTO;
 import com.inkafarma.personsapi.service.PersonService;
+import com.inkafarma.personsapi.util.Properties;
 import com.inkafarma.personsapi.util.Utilitario;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,19 +23,27 @@ import java.util.stream.Collectors;
 @Setter
 public class PersonServiceImpl implements PersonService {
 
+
+    @Autowired
+    private Properties properties;
+
     @Autowired
     private PersonDao personDao;
 
+    @Autowired
+    private Utilitario utilitario;
+
     @Override
     public List<PersonSearchResponse> getListPerson() throws Exception {
-        log.info("getListPerson:"+personDao);
+
+
 
         return personDao.getListPerson().stream().map(r -> PersonSearchResponse.builder()
                 .setNombre(r.getName())
                 .setApellido(r.getLastName())
                 .setEdad(r.getAge())
                 .setFechaNacimiento(r.getBirthDate())
-                .setFechaProbableMuerte(Utilitario.getDeathDateEstimate(r.getBirthDate()))
+                .setFechaProbableMuerte(utilitario.getDeathDateEstimate(r.getBirthDate()))
         .build()).collect(Collectors.toList());
     }
 

@@ -1,23 +1,84 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Utilitario.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persons-api</a> &gt; <a href="index.source.html" class="el_package">com.inkafarma.personsapi.util</a> &gt; <span class="el_source">Utilitario.java</span></div><h1>Utilitario.java</h1><pre class="source lang-java linenums">package com.inkafarma.personsapi.util;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Utilitario.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persons-api</a> &gt; <a href="index.source.html" class="el_package">com.inkafarma.personsapi.util</a> &gt; <span class="el_source">Utilitario.java</span></div><h1>Utilitario.java</h1><pre class="source lang-java linenums">package com.inkafarma.personsapi.util;
+
+import com.fasterxml.jackson.datatype.jsr310.ser.YearSerializer;
+import com.google.appengine.repackaged.org.joda.time.Years;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
+
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Random;
 
-<span class="nc" id="L7">public class Utilitario {</span>
-    public static String getDeathDateEstimate(String fechaNacimiento){
-<span class="fc" id="L9">        String datos[] = fechaNacimiento.split(&quot;-&quot;);</span>
+<span class="fc" id="L18">@Slf4j</span>
+@Component
+public class Utilitario {
+
+    private Properties properties;
+
+    @Autowired
+<span class="fc" id="L25">    public Utilitario(Properties properties){</span>
+<span class="fc" id="L26">        this.properties = properties;</span>
+<span class="fc" id="L27">    }</span>
+
+    public String getDeathDateEstimateRandom(String fechaNacimiento){
+<span class="nc" id="L30">        String datos[] = fechaNacimiento.split(&quot;-&quot;);</span>
 
         Calendar unaFecha;
         Random aleatorio;
-<span class="fc" id="L13">        aleatorio = new Random();</span>
+<span class="nc" id="L34">        aleatorio = new Random();</span>
 
 
-<span class="fc" id="L16">        unaFecha = Calendar.getInstance();</span>
-<span class="fc" id="L17">        unaFecha.set (aleatorio.nextInt(50)+Integer.parseInt(datos[0]), aleatorio.nextInt(Integer.parseInt(datos[1]))+1, aleatorio.nextInt(Integer.parseInt(datos[2]))+1);</span>
-<span class="fc" id="L18">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</span>
+<span class="nc" id="L37">        unaFecha = Calendar.getInstance();</span>
+<span class="nc" id="L38">        unaFecha.set (aleatorio.nextInt(50)+Integer.parseInt(datos[0]), aleatorio.nextInt(Integer.parseInt(datos[1]))+1, aleatorio.nextInt(Integer.parseInt(datos[2]))+1);</span>
+<span class="nc" id="L39">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</span>
 
-<span class="fc" id="L20">        return sdf.format(unaFecha.getTime());</span>
+<span class="nc" id="L41">        return sdf.format(unaFecha.getTime());</span>
+    }
+
+    public String getDeathDateEstimate(String fechaNacimiento){
+
+<span class="fc" id="L46">        String datos[] = fechaNacimiento.split(&quot;-&quot;);</span>
+
+<span class="fc" id="L48">        LocalDate birthDate = LocalDate.of(Integer.parseInt(datos[0]),Integer.parseInt(datos[1]),Integer.parseInt(datos[2]));</span>
+<span class="fc" id="L49">        LocalDate localDate = LocalDate.now();</span>
+<span class="fc" id="L50">        Period period = Period.between(birthDate,localDate);</span>
+
+<span class="fc" id="L52">        log.info(&quot;fecha de nacimiento:&quot;+fechaNacimiento);</span>
+<span class="fc" id="L53">        log.info(&quot;edad actual:&quot;+period.getYears());</span>
+
+<span class="fc" id="L55">        String rango = properties.getRange().stream().filter(r -&gt; {</span>
+
+<span class="fc" id="L57">            String val[] = r.split(&quot;_&quot;);</span>
+
+<span class="pc bpc" id="L59" title="2 of 4 branches missed.">            return Integer.parseInt(val[0]) &lt;= period.getYears() &amp;&amp; Integer.parseInt(val[1]) &gt;= period.getYears();</span>
+<span class="fc" id="L60">        }).findFirst().orElse(&quot;81_more&quot;);</span>
+
+<span class="fc" id="L62">        float probabilidad = Float.parseFloat(properties.getDeathProbability().get(&quot;range_&quot;+rango));</span>
+<span class="fc" id="L63">        int expectativaVida = Integer.parseInt(properties.getAverageLifeHope().get(&quot;range_&quot;+rango));</span>
+
+<span class="fc" id="L65">        int diferencia = expectativaVida - period.getYears();</span>
+
+        int edadMuerte;
+
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">        if (diferencia &gt; 0) {</span>
+
+<span class="nc" id="L71">            edadMuerte= (int)(diferencia*(100.0-probabilidad)/100) + period.getYears();</span>
+        } else {
+<span class="fc" id="L73">            diferencia = diferencia*-1;</span>
+<span class="fc" id="L74">            edadMuerte = (int)(diferencia*(100.0-probabilidad*(diferencia/4+1))/100) +  period.getYears()+1;</span>
+        }
+
+<span class="fc" id="L77">        LocalDate deathDate = LocalDate.of(Integer.parseInt(datos[0])+edadMuerte,localDate.getMonth(),localDate.getDayOfMonth());</span>
+
+<span class="fc" id="L79">        log.info(&quot;fecha probable de muerte:&quot;+deathDate);</span>
+
+<span class="fc" id="L81">        return deathDate.toString();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

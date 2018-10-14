@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersonServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persons-api</a> &gt; <a href="index.source.html" class="el_package">com.inkafarma.personsapi.service.impl</a> &gt; <span class="el_source">PersonServiceImpl.java</span></div><h1>PersonServiceImpl.java</h1><pre class="source lang-java linenums">package com.inkafarma.personsapi.service.impl;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersonServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">persons-api</a> &gt; <a href="index.source.html" class="el_package">com.inkafarma.personsapi.service.impl</a> &gt; <span class="el_source">PersonServiceImpl.java</span></div><h1>PersonServiceImpl.java</h1><pre class="source lang-java linenums">package com.inkafarma.personsapi.service.impl;
 
 import com.inkafarma.personsapi.dao.PersonDao;
 import com.inkafarma.personsapi.model.PersonRegisterRequest;
 import com.inkafarma.personsapi.model.PersonSearchResponse;
 import com.inkafarma.personsapi.model.PersonDTO;
 import com.inkafarma.personsapi.service.PersonService;
+import com.inkafarma.personsapi.util.Properties;
 import com.inkafarma.personsapi.util.Utilitario;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,47 +18,55 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-<span class="fc" id="L20">@Slf4j</span>
+<span class="fc" id="L21">@Slf4j</span>
 @Getter
-<span class="fc" id="L22">@Setter</span>
-<span class="fc" id="L23">public class PersonServiceImpl implements PersonService {</span>
+<span class="pc" id="L23">@Setter</span>
+<span class="fc" id="L24">public class PersonServiceImpl implements PersonService {</span>
+
 
     @Autowired
-<span class="nc" id="L26">    private PersonDao personDao;</span>
+<span class="nc" id="L28">    private Properties properties;</span>
+
+    @Autowired
+<span class="nc" id="L31">    private PersonDao personDao;</span>
+
+    @Autowired
+<span class="nc" id="L34">    private Utilitario utilitario;</span>
 
     @Override
     public List&lt;PersonSearchResponse&gt; getListPerson() throws Exception {
-<span class="fc" id="L30">        log.info(&quot;getListPerson:&quot;+personDao);</span>
 
-<span class="fc" id="L32">        return personDao.getListPerson().stream().map(r -&gt; PersonSearchResponse.builder()</span>
-<span class="fc" id="L33">                .setNombre(r.getName())</span>
-<span class="fc" id="L34">                .setApellido(r.getLastName())</span>
-<span class="fc" id="L35">                .setEdad(r.getAge())</span>
-<span class="fc" id="L36">                .setFechaNacimiento(r.getBirthDate())</span>
-<span class="fc" id="L37">                .setFechaProbableMuerte(Utilitario.getDeathDateEstimate(r.getBirthDate()))</span>
-<span class="fc" id="L38">        .build()).collect(Collectors.toList());</span>
+
+
+<span class="fc" id="L41">        return personDao.getListPerson().stream().map(r -&gt; PersonSearchResponse.builder()</span>
+<span class="fc" id="L42">                .setNombre(r.getName())</span>
+<span class="fc" id="L43">                .setApellido(r.getLastName())</span>
+<span class="fc" id="L44">                .setEdad(r.getAge())</span>
+<span class="fc" id="L45">                .setFechaNacimiento(r.getBirthDate())</span>
+<span class="fc" id="L46">                .setFechaProbableMuerte(utilitario.getDeathDateEstimate(r.getBirthDate()))</span>
+<span class="fc" id="L47">        .build()).collect(Collectors.toList());</span>
     }
 
     @Override
     public boolean addPerson(PersonRegisterRequest personRegisterRequest) throws Exception {
-<span class="fc" id="L43">        PersonDTO personDTO = new PersonDTO();</span>
-<span class="fc" id="L44">        personDTO.setName(personRegisterRequest.getName());</span>
-<span class="fc" id="L45">        personDTO.setLastName(personRegisterRequest.getLastName());</span>
-<span class="fc" id="L46">        personDTO.setAge(personRegisterRequest.getAge());</span>
-<span class="fc" id="L47">        personDTO.setBirthDate(personRegisterRequest.getBirthDate());</span>
+<span class="fc" id="L52">        PersonDTO personDTO = new PersonDTO();</span>
+<span class="fc" id="L53">        personDTO.setName(personRegisterRequest.getName());</span>
+<span class="fc" id="L54">        personDTO.setLastName(personRegisterRequest.getLastName());</span>
+<span class="fc" id="L55">        personDTO.setAge(personRegisterRequest.getAge());</span>
+<span class="fc" id="L56">        personDTO.setBirthDate(personRegisterRequest.getBirthDate());</span>
 
-<span class="pc bnc" id="L49" title="All 2 branches missed.">        return Optional.ofNullable(personDao.addPerson(personDTO).get_id()).filter(r -&gt; r.length()&gt;0 ).isPresent();</span>
+<span class="pc bnc" id="L58" title="All 2 branches missed.">        return Optional.ofNullable(personDao.addPerson(personDTO).get_id()).filter(r -&gt; r.length()&gt;0 ).isPresent();</span>
     }
 
     @Override
     public PersonSearchResponse averageAge() throws Exception {
 
-<span class="fc" id="L55">        return PersonSearchResponse</span>
-<span class="fc" id="L56">                .builder()</span>
-<span class="fc" id="L57">                .setEdadPromedio((int) (personDao</span>
-<span class="fc" id="L58">                        .getListPerson().stream()</span>
-<span class="fc" id="L59">                        .mapToInt(PersonDTO::getAge).average().getAsDouble()))</span>
-<span class="fc" id="L60">                .build();</span>
+<span class="fc" id="L64">        return PersonSearchResponse</span>
+<span class="fc" id="L65">                .builder()</span>
+<span class="fc" id="L66">                .setEdadPromedio((int) (personDao</span>
+<span class="fc" id="L67">                        .getListPerson().stream()</span>
+<span class="fc" id="L68">                        .mapToInt(PersonDTO::getAge).average().getAsDouble()))</span>
+<span class="fc" id="L69">                .build();</span>
 
 
     }
